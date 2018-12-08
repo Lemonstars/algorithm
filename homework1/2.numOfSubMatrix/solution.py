@@ -37,40 +37,38 @@ def max_area_histogram(histogram):
     return max_area
 
 
-# input
-data = list()
-for line in sys.stdin:
-    nums = line.rstrip('\n').split(' ')
-    line_data = list()
-    for i in nums:
-        line_data.append(int(i))
-    data.append(line_data)
+if __name__ == '__main__':
+    # input
+    data = list()
+    for line in sys.stdin:
+        nums = line.rstrip('\n').split(' ')
+        line_data = list()
+        for i in nums:
+            line_data.append(int(i))
+        data.append(line_data)
 
-# compute the histogram of the first row
-first_row_histogram = list()
-current_num = 0
-for item in data[0]:
-    if item == 1:
-        current_num += 1
-    else:
-        current_num = 0
-    first_row_histogram.append(current_num)
+    # compute the histogram of the first row
+    first_row_histogram = list()
+    current_num = 0
+    for item in data[0]:
+        current_num = current_num + 1 if item == 1 else 0
+        first_row_histogram.append(current_num)
 
-# store the histogram of the every row
-all_row_histogram = list()
-all_row_histogram.append(first_row_histogram)
-max_num = max_area_histogram(first_row_histogram)
+    # store the histogram of the every row
+    all_row_histogram = list()
+    all_row_histogram.append(first_row_histogram)
+    max_num = max_area_histogram(first_row_histogram)
 
-# continue to compute the remaining rows
-for row in data[1:]:
-    this_row_histogram = list()
-    for col_index in range(len(row)):
-        item = row[col_index]
-        if item == 0:
-            this_row_histogram.append(0)
-        else:
-            this_row_histogram.append(all_row_histogram[-1][col_index]+1)
-    all_row_histogram.append(this_row_histogram)
-    max_num = max(max_num, max_area_histogram(this_row_histogram))
+    # continue to compute the remaining rows
+    for row in data[1:]:
+        this_row_histogram = list()
+        for col_index in range(len(row)):
+            item = row[col_index]
+            if item == 0:
+                this_row_histogram.append(0)
+            else:
+                this_row_histogram.append(all_row_histogram[-1][col_index]+1)
+        all_row_histogram.append(this_row_histogram)
+        max_num = max(max_num, max_area_histogram(this_row_histogram))
 
-print(max_num)
+    print(max_num)
