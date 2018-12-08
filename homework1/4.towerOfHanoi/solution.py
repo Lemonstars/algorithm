@@ -9,3 +9,5 @@
 # 2
 # Sample Output 1
 # 8
+
+n = int(input())
