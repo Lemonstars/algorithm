@@ -10,7 +10,7 @@
 # 4 3 5 4 3 3 6 7
 # 3
 # Sample Output 1
-# 27
+# 32
 
 from collections import deque
 
