@@ -37,6 +37,10 @@ def max_area_histogram(histogram):
     return max_area
 
 
+# if __name__ == '__main__':
+#     data = [6, 2, 5, 4, 5, 1, 6]
+#     print(max_area_histogram(data))
+
 if __name__ == '__main__':
     # input
     data = list()
@@ -47,17 +51,10 @@ if __name__ == '__main__':
             line_data.append(int(i))
         data.append(line_data)
 
-    # compute the histogram of the first row
-    first_row_histogram = list()
-    current_num = 0
-    for item in data[0]:
-        current_num = current_num + 1 if item == 1 else 0
-        first_row_histogram.append(current_num)
-
     # store the histogram of the every row
     all_row_histogram = list()
-    all_row_histogram.append(first_row_histogram)
-    max_num = max_area_histogram(first_row_histogram)
+    all_row_histogram.append(data[0])
+    max_num = max_area_histogram(data[0])
 
     # continue to compute the remaining rows
     for row in data[1:]:
