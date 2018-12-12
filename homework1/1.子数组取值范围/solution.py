@@ -1,6 +1,6 @@
 # Description
 # 给定数组arr和整数num，求arr的子数组中满足：
-# 其最大值减去最小值的结果小于等于num的个数。请实现一个时间复杂度为O(length(arr))的算法。
+# 其最大值减去最小值的结果大于num的个数。请实现一个时间复杂度为O(length(arr))的算法。
 # Input
 # 输入的第一行为数组，每一个数用空格隔开，第二行为num。
 # Output
@@ -10,8 +10,8 @@
 # 3 6 4 3 2
 # 2
 # Sample Output 1
-# 9
-# [3] [6] [4] [3] [2] [6, 4] [4, 3] [4, 3, 2] [3, 2]
+# 6
+# [3, 6] [3, 6, 4] [3, 6, 4, 3] [3, 6, 4, 3, 2] [6, 4, 3] [6, 4, 3, 2]
 
 from collections import deque
 
@@ -72,4 +72,6 @@ while i < length:
     # that are out of the range
     i += 1
 
-print(res)
+data_len = len(arr)
+res = data_len * (data_len + 1) / 2 - res
+print(int(res))
