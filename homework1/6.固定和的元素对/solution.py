@@ -10,3 +10,21 @@
 # 11
 # Sample Output 1
 # 3
+
+# input: data, s
+data = list()
+for item in input().split():
+    data.append(int(item))
+s = int(input())
+
+count = 0
+value_to_index = dict()
+for item in data:
+    if s-item in value_to_index:
+        count += value_to_index[s-item]
+
+    if item in value_to_index:
+        value_to_index[item] += 1
+    else:
+        value_to_index[item] = 1
+print(count)
