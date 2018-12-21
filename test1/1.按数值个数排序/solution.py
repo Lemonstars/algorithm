@@ -24,13 +24,40 @@
 # 4 4 5 5 6
 
 
+def quick_sort(data, low, high):
+    if low < high:
+        p = partition(data, low, high)
+        quick_sort(data, low, p-1)
+        quick_sort(data, p+1, high)
+
+
+def partition(data, low, high):
+    pivot = data[high]
+    i = low - 1
+    for j in range(low, high):
+        if (data[j][1] > pivot[1]) or \
+                (data[j][1] == pivot[1] and data[j][0] < pivot[0]):
+            i += 1
+            tmp = data[i]
+            data[i] = data[j]
+            data[j] = tmp
+
+    tmp = data[high]
+    data[high] = data[i+1]
+    data[i+1] = tmp
+
+    return i+1
+
+
 t = int(input())
 while t > 0:
+    # input
     size = int(input())
     arr = list()
     for item in input().split():
         arr.append(int(item))
 
+    # store the frequency
     value_to_num_dict = dict()
     for item in arr:
         if item not in value_to_num_dict:
@@ -38,14 +65,17 @@ while t > 0:
         else:
             value_to_num_dict[item] += 1
 
+    # use tuple to store
     value_to_num_list = list()
     for key in value_to_num_dict:
         value_to_num_list.append((key, value_to_num_dict[key]))
 
-    res = sorted(sorted(value_to_num_list), key=lambda b: b[1], reverse=True)
-    for item in res:
+    # use custom quick sort
+    quick_sort(value_to_num_list, 0, len(value_to_num_list) - 1)
+
+    # print the result
+    for item in value_to_num_list:
         for i in range(int(item[1])):
             print(item[0], end=' ')
 
     t -= 1
-
