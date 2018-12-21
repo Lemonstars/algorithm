@@ -22,36 +22,33 @@
 #
 # Sample Output 1
 # 2
-# 2
-
-
-def min_swaps(arr, length):
-    arr_pos = [*enumerate(arr)]
-    arr_pos.sort(key=lambda it: it[1])
-    vis = {k: False for k in range(length)}
-
-    ans = 0
-    for i in range(length):
-        if vis[i] or arr_pos[i][0] == i:
-            continue
-        cycle_size = 0
-        j = i
-        while not vis[j]:
-            vis[j] = True
-            j = arr_pos[j][0]
-            cycle_size += 1
-        if cycle_size > 0:
-            ans += (cycle_size - 1)
-    return ans
 
 
 t = int(input())
 while t > 0:
+    # input
     size = int(input())
     arr = list()
     for item in input().split():
         arr.append(int(item))
 
-    print(min_swaps(arr, len(arr)))
+    # store the sorted array and corresponding dict
+    sort_arr = sorted(arr)
+    value2index_dict = dict()
+    for index in range(size):
+        value2index_dict[sort_arr[index]] = index
+
+    # compute the number of swap
+    cnt = 0
+    for i in range(size):
+        if arr[i] == sort_arr[i]:
+            continue
+        else:
+            tmp = arr[i]
+            arr[i] = arr[value2index_dict[tmp]]
+            arr[value2index_dict[tmp]] = tmp
+            cnt += 1
+    print(cnt)
+
     t -= 1
 
