@@ -18,32 +18,42 @@
 # 17
 
 
-def InversionNum(lst):
-    if len(lst) == 1:
-        return lst, 0
-    else:
-        n = len(lst) // 2
-        lst1, count1 = InversionNum(lst[0:n])
-        lst2, count2 = InversionNum(lst[n:len(lst)])
-        lst, count = Count(lst1, lst2, 0)
-        return lst, count1 + count2 + count
+def reserve_num(data, p, r):
+    count = 0
+    if p < r:
+        q = (p + r) // 2
+        left_num = reserve_num(data, p, q)
+        right_num = reserve_num(data, p+1, r)
+        mid_num = merge(data, p, q, r)
+        count = left_num + right_num + mid_num
+    return count
 
 
-def Count(lst1, lst2, count):
-    i = 0
-    j = 0
-    res = []
-    while i < len(lst1) and j < len(lst2):
-        if lst1[i] <= lst2[j]:
-            res.append(lst1[i])
+def merge(data, p, q, r):
+    n1 = q - p + 1
+    n2 = r - q
+    left = list()
+    right = list()
+    for i in range(p, q+1):
+        left.append(data[i])
+    for i in range(q+1, r+1):
+        right.append(data[i])
+
+    i, j, cnt = 0, 0, 0
+    for k in range(p, r+1):
+        # when either of the index reaches the end,
+        # all reserved pairs have been calculated.
+        if i == n1 or j == n2:
+            break
+        elif left[i] <= right[j]:
+            data[k] = left[i]
             i += 1
-        else:
-            res.append(lst2[j])
-            count += len(lst1) - i
+        elif left[i] > right[j]:
+            data[k] = right[j]
             j += 1
-    res += lst1[i:]
-    res += lst2[j:]
-    return res, count
+            # 以逆序对的第二项为累加的标准
+            cnt += n1-i
+    return cnt
 
 
 t = int(input())
@@ -53,5 +63,5 @@ while t > 0:
     for item in input().split():
         arr.append(int(item))
 
-    print(InversionNum(arr)[1])
+    print(reserve_num(arr, 0, len(arr)-1))
     t -= 1
