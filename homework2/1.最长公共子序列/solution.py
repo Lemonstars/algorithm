@@ -30,11 +30,36 @@ def LCS(str1, str2):
             else:
                 L[i][j] = max(L[i-1][j], L[i][j-1])
 
-    return L[m][n]
+    return L
 
 
-data1 = '1A2BD3G4H56JK'
-data2 = '23EFG4I5J6K7'
-print(LCS(data1, data2))
+def getAllLCS(str1, str2, m, n):
+    res = set()
+
+    if m == 0 or n == 0:
+        res.add('')
+        return res
+
+    if str1[m-1] == str2[n-1]:
+        tmp = getAllLCS(str1, str2, m-1, n-1)
+        for s in tmp:
+            res.add(s + str1[m-1])
+    else:
+        if length[m-1][n] > length[m][n-1]:
+            res = getAllLCS(str1, str2, m-1, n)
+        elif length[m][n-1] > length[m-1][n]:
+            res = getAllLCS(str1, str2, m, n-1)
+        else:
+            res = getAllLCS(str1, str2, m-1, n)
+            for s in getAllLCS(str1, str2, m, n-1):
+                res.add(s)
+
+    return res
 
 
+data1 = input()
+data2 = input()
+length = LCS(data1, data2)
+all_res = getAllLCS(data1, data2, len(data1), len(data2))
+for item in all_res:
+    print(item)
