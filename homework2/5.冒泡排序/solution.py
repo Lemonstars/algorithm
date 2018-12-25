@@ -38,5 +38,5 @@ if __name__ == '__main__':
         for index in range(1, len(data)):
             array.append(int(data[index]))
 
-        insert_sort(array, number)
+        bubble_sort(array, number)
         print_arr(array, number)
