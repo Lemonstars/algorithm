@@ -15,7 +15,7 @@
 import sys
 
 
-def insert_sort(arr, num):
+def bubble_sort(arr, num):
     for i in range(num - 1):
         for j in range(num - 1 - i):
             if arr[j] > arr[j + 1]:
