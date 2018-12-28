@@ -73,15 +73,15 @@ if __name__ == '__main__':
         # reverse every k interval
         current = head
         previous = None
-        start = None
         cnt = 1
         while current:
             next_node = current.get_next()
             if cnt == k:
-                start = head if previous is None else previous.get_next()
                 if previous is None:
+                    start = head
                     head, previous = reverse(previous, start, current, next_node)
                 else:
+                    start = previous.get_next()
                     previous = reverse(previous, start, current, next_node)[1]
                 cnt = 1
             else:
@@ -92,6 +92,5 @@ if __name__ == '__main__':
             if head.get_next():
                 print(head.get_data(), end=' ')
             else:
-                print(head.get_data(), end='')
+                print(head.get_data())
             head = head.get_next()
-        print()
