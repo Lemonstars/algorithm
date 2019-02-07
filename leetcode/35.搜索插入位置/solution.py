@@ -26,21 +26,21 @@ class Solution:
         lo = 0
         hi = len(nums) - 1
         while lo <= hi:
+            if target < nums[lo]:
+                return lo
+
+            if target > nums[hi]:
+                return hi + 1
+
             mid = (lo + hi) // 2
             number = nums[mid]
 
             if number == target:
                 return mid
             elif number < target:
-                if mid == hi:
-                    return hi + 1
-                else:
-                    lo = mid + 1
+                lo = mid + 1
             else:
-                if mid == lo:
-                    return lo
-                else:
-                    hi = mid - 1
+                hi = mid - 1
 
 
 s = Solution()
