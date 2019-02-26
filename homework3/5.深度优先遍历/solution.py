@@ -38,12 +38,37 @@ class DepthFirstSearch:
     def depth_first_search(self, start_vertice, depth):
         self.vertice[start_vertice] = True
         all_edge = self.matrixOfEdge[start_vertice]
+
+        # all connect vertices
+        connect = list()
         for index in range(self.numOfVertice):
             if all_edge[index] == 1 and not self.vertice[index]:
+                connect.append(index)
+
+        # generate all permutation
+        all_permutation = list()
+        self.permutation(connect, [], all_permutation)
+
+        for con in all_permutation:
+            for index in con:
                 if depth + 1 > self.maxDepth:
                     self.maxDepth = depth + 1
                 self.vertice[index] = True
                 self.depth_first_search(index, depth + 1)
+                self.vertice[index] = False
+
+    def permutation(self, nums, cur_res, all_res):
+        if len(nums) == 1:
+            cur_res.append(nums[0])
+            all_res.append(cur_res)
+            return
+
+        for i in range(len(nums)):
+            res_copy = cur_res.copy()
+            res_copy.append(nums[i])
+            num_copy = nums.copy()
+            del num_copy[i]
+            self.permutation(num_copy, res_copy, all_res)
 
     def getMaxDepth(self, start_vertice):
         self.depth_first_search(self.name_dict[start_vertice], 1)
