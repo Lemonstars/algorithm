@@ -46,7 +46,8 @@ class Solution(object):
         if n == 0:
             return []
 
-        self.quick_sort(intervals, 0, n-1)
+        # self.quick_sort(intervals, 0, n-1)
+        intervals.sort(key=lambda x:x.start)
 
         res = list()
         res.append(intervals[0])
