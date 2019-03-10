@@ -9,4 +9,24 @@
 
 class Solution(object):
     def lengthOfLastWord(self, s):
-        return 0
+        n = len(s)
+        if n == 0:
+            return 0
+
+        i = n - 1
+        target = ord(' ')
+        end_blank = True
+        num = 0
+        while i >= 0:
+            ch = ord(s[i])
+            if ch == target:
+                if end_blank:
+                    i -= 1
+                else:
+                    break
+            else:
+                end_blank = False
+                num += 1
+                i -= 1
+
+        return num
