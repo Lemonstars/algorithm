@@ -21,50 +21,42 @@ from typing import List
 
 class Solution:
 
-    def __init__(self):
-        self.board = None
-        self.visit = None
+    def dfs(self, x: int, y: int, board: List[List[str]]):
+        if x < 0 or x >= n or y < 0 or y >= m:
+            return
 
-    def find(self, x: int, y: int, res: List):
-        self.visit[x][y] = True
-        item = self.board[x][y]
-        if item == 'X':
-            return False
-
-        n, m = len(self.visit), len(self.visit[0])
-        res.append((x, y))
-        is_board = x == 0 or x == (n - 1) or y == 0 or y == (m - 1)
-        if x - 1 >= 0 and not self.visit[x - 1][y]:
-            is_board = self.find(x - 1, y, res) or is_board
-
-        if x + 1 < n and not self.visit[x + 1][y]:
-            is_board = self.find(x + 1, y, res) or is_board
-
-        if y - 1 >= 0 and not self.visit[x][y - 1]:
-            is_board = self.find(x, y - 1, res) or is_board
-
-        if y + 1 < m and not self.visit[x][y + 1]:
-            is_board = self.find(x, y + 1, res) or is_board
-
-        return is_board
+        if board[x][y] == 'O':
+            board[x][y] = '-'
+            self.dfs(x - 1, y, board)
+            self.dfs(x + 1, y, board)
+            self.dfs(x, y - 1, board)
+            self.dfs(x, y + 1, board)
 
     def solve(self, board: List[List[str]]) -> None:
+        global n
         n = len(board)
         if n == 0:
             return
 
+        global m
         m = len(board[0])
-        self.board = board
-        self.visit = visit = [[False for _ in range(m)] for _ in range(n)]
+        if m == 0:
+            return
+
+        for i in range(0, n):
+            self.dfs(i, 0, board)
+            self.dfs(i, m - 1, board)
+
+        for j in range(1, m - 1):
+            self.dfs(0, j, board)
+            self.dfs(n - 1, j, board)
 
         for i in range(n):
             for j in range(m):
-                if not visit[i][j]:
-                    area = list()
-                    isB = self.find(i, j, area)
-                    if not isB:
-                        for item in area:
-                            board[item[0]][item[1]] = 'X'
+                if board[i][j] == '-':
+                    board[i][j] = 'O'
+                elif board[i][j] == 'O':
+                    board[i][j] = 'X'
 
 
 s = Solution()
