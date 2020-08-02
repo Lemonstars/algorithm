@@ -20,30 +20,28 @@
 # 输入: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 # 输出: false
 
-# 该算法超时
+
 from typing import List
 
 
 class Solution:
 
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        wordSet = set()
+        n = len(s)
+
+        dp = [False for _ in range(n+1)]
+        word_set = set()
         for item in wordDict:
-            wordSet.add(item)
+            word_set.add(item)
+        dp[0] = True
 
-        length = len(s)
+        for i in range(1, n+1):
+            for j in range(i):
+                if dp[j] and s[j: i] in word_set:
+                    dp[i] = True
+                    break
 
-        def backtrace(start) -> bool:
-            if start == length:
-                return True
-
-            for i in range(start, length):
-                if s[start: i+1] in wordSet and backtrace(i+1):
-                    return True
-
-            return False
-
-        return backtrace(0)
+        return dp[n]
 
 
 s1 = "leetcode"
